@@ -1,0 +1,90 @@
+Combining perils without running a combined model
+========================================================
+author: Michael Nielsen
+date: 30 October 2017
+autosize: true
+
+The Situation
+========================================================
+
+Assume that the losses are split into 2 perils.
+- F = Fire
+- A = All other
+
+- Y = F + A
+
+The individual peril models are complete, but the decision has been made to file combined rates rather than at a peril level.
+
+Possible Actions
+========================================================
+
+The modeler has two choices:
+
+1.  Combine the responses (i.e., Y = F + A) and create a new model
+
+2.  Use the results of the peril models to estimate the combined model coefficients.
+
+
+The models
+========================================================
+Peril Models:
+
+$$
+\begin{align}
+ln(F)=\beta_0^F + \beta_1^F x_1 + \beta_2^F x_2 + \cdots
+  &\implies F = e^{\beta_0^F} e^{\beta_1^F x_1} e^{\beta_2^F x_2} \cdots \\
+ln(A)=\beta_0^A + \beta_1^A x_1 + \beta_2^A x_2 + \cdots
+  &\implies A = e^{\beta_0^A} e^{\beta_1^A x_1} e^{\beta_2^A x_2} \cdots
+\end{align}
+$$
+
+Combined Model:
+
+$$
+ln(Y)=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots 
+\implies Y = e^{\beta_0} e^{\beta_1 x_1} e^{\beta_2 x_2} \cdots \\
+$$
+
+Step 1: Estimate the combined base rate
+========================================================
+When factors are at their base levels, they drop out of the model equation.
+
+$$
+F = e^{\beta_0^F}\\
+A = e^{\beta_0^A}\\
+$$
+
+$$
+Y = e^{\beta_0}
+$$
+
+The combined base rate is just the sum of the peril base rates.
+
+$$
+\begin{align}
+Y &= F + A \\ 
+e^{\beta_0}  &= e^{\beta_0^F} + e^{\beta_0^A}\\
+\end{align}
+$$
+
+
+Step 2: Estimate other rating factors
+========================================================
+
+$$
+\begin{align}
+Y &= F + A \\ 
+e^{\beta_0} e^{\beta_1 x} &= e^{\beta_0^F} e^{\beta_1^F x} + e^{\beta_0^A} e^{\beta_1^A x}\\
+\end{align}
+$$
+
+Solving for the first rating factor, we get
+
+$$
+\begin{align}
+e^{\beta_1 x} &= \frac{e^{\beta_0^F} e^{\beta_1^F x} + e^{\beta_0^A} e^{\beta_1^A x}}{e^{\beta_0}} \\
+              &= \frac{e^{\beta_0^F} e^{\beta_1^F x} + e^{\beta_0^A} e^{\beta_1^A x}}{e^{\beta_0^F} + e^{\beta_0^A}}
+\end{align}
+$$
+
+Thus, the combined rating factor is just a weighted average of the individual peril factors with the weights equal to the model intercepts.
